@@ -13,19 +13,65 @@ document.getElementById("gmail_button").addEventListener("click", function () {
   }
 });
 
-// Home work 1/2 движение блока
-function movement(position = 0) {
-  const parentBlock = document.querySelector(".parent_block");
-  const childBlock = document.querySelector(".child_block");
+// Home work 1/2 - 2/1 движение блока
+const parentBlock = document.querySelector(".parent_block");
+const childBlock = document.querySelector(".child_block");
 
-  const parentWidth = parentBlock.offsetWidth;
-  const childWidth = childBlock.offsetWidth;
+let positionX = 0,
+  positionY = 0;
 
-  if (position + childWidth < parentWidth) {
-    childBlock.style.left = `${position}px`;
+const offsetWidth = parentBlock.offsetWidth - childBlock.offsetWidth;
+const offsetHeight = parentBlock.offsetHeight - childBlock.offsetHeight;
 
-    setTimeout(() => movement(position + 5), 25);
+const movement = () => {
+  if (positionX < offsetWidth && positionY === 0) {
+    positionX++;
+    childBlock.style.left = `${positionX}px`;
+    requestAnimationFrame(movement);
+  } else if (positionX >= offsetWidth && positionY < offsetHeight) {
+    positionY++;
+    childBlock.style.top = `${positionY}px`;
+    requestAnimationFrame(movement);
+  } else if (positionY >= offsetHeight && positionX > 0) {
+    positionX--;
+    childBlock.style.left = `${positionX}px`;
+    requestAnimationFrame(movement);
+  } else if (positionX <= 0 && positionY > 0) {
+    positionY--;
+    childBlock.style.top = `${positionY}px`;
+    requestAnimationFrame(movement);
+  } else {
+    positionX = 0;
+    positionY = 0;
+    requestAnimationFrame(movement);
   }
-}
+};
 
 movement();
+
+// Home work 2/2 секундомер
+let seconds = 0;
+let timer;
+
+const secondsDisplay = document.getElementById("seconds");
+const startButton = document.getElementById("start");
+const stopButton = document.getElementById("stop");
+const resetButton = document.getElementById("reset");
+
+startButton.addEventListener("click", () => {
+  if (!timer) {
+    timer = setInterval(() => (secondsDisplay.textContent = ++seconds), 1000);
+  }
+});
+
+stopButton.addEventListener("click", () => {
+  clearInterval(timer);
+  timer = null;
+});
+
+resetButton.addEventListener("click", () => {
+  clearInterval(timer);
+  timer = null;
+  seconds = 0;
+  secondsDisplay.textContent = seconds;
+});
