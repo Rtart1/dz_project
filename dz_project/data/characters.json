@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Вебстер Маккей",
+    "callSign": "отсутсвует",
+    "class": "Штурмовик",
+    "photo": "https://media.contentapi.ea.com/content/dam/battlefield/battlefield-2042/common/classes-rework/specialists-grid-tiles/bf-2042-grid-tile-specialist-portrait-mackay.jpg.adapt.crop16x9.jpg"
+  },
+  {
+    "name": "Эвелина Лис",
+    "callSign": "отсутсвует",
+    "class": "Инженер-специалист",
+    "photo": "https://media.contentapi.ea.com/content/dam/battlefield/battlefield-2042/common/classes-rework/specialists-grid-tiles/stream-image-ewelina-lis.jpg.adapt.crop16x9.jpg"
+  },
+  {
+    "name": "Петр Гусковский",
+    "callSign": "Boris",
+    "class": "Инженер",
+    "photo": "https://media.contentapi.ea.com/content/dam/battlefield/battlefield-2042/common/classes-rework/specialists-grid-tiles/bf-2042-grid-tile-specialist-portrait-boris.jpg.adapt.crop16x9.jpg"
+  },
+  {
+    "name": "Мария Фальк",
+    "callSign": "отсутсвует",
+    "class": "Медик",
+    "photo": "https://media.contentapi.ea.com/content/dam/battlefield/battlefield-2042/common/classes-rework/specialists-grid-tiles/bf-2042-grid-tile-specialist-portrait-falck.jpg.adapt.crop16x9.jpg"
+  },
+  {
+    "name": "Джи-Су Пэк",
+    "callSign": "Пэк",
+    "class": "Специалист по разведке",
+    "photo": "https://media.contentapi.ea.com/content/dam/battlefield/battlefield-2042/common/classes-rework/specialists-grid-tiles/bf-2042-grid-tile-specialist-portrait-paik.jpg.adapt.crop16x9.jpg"
+  },
+  {
+    "name": "Константин Анхель",
+    "callSign": "Angel",
+    "class": "Специалист по поддержке",
+    "photo": "https://media.contentapi.ea.com/content/dam/battlefield/battlefield-2042/common/classes-rework/specialists-grid-tiles/bf-2042-grid-tile-specialist-portrait-angel.jpg.adapt.crop16x9.jpg"
+  },
+  {
+    "name": "Камила Бласко",
+    "callSign": "отсутсвует",
+    "class": "Специалист по разведке",
+    "photo": "https://media.contentapi.ea.com/content/dam/battlefield/battlefield-2042/common/classes-rework/specialists-grid-tiles/bf-2042-grid-tile-specialist-portrait-blasco.jpg.adapt.crop16x9.jpg"
+  },
+  {
+    "name": "Викус Ван Дейл",
+    "callSign": "Casper",
+    "class": "Разведчик",
+    "photo": "https://media.contentapi.ea.com/content/dam/battlefield/battlefield-2042/common/classes-rework/specialists-grid-tiles/bf-2042-grid-tile-specialist-portrait-casper.jpg.adapt.crop16x9.jpg"
+  }
+]

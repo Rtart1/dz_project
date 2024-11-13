@@ -75,3 +75,68 @@ resetButton.addEventListener("click", () => {
   seconds = 0;
   secondsDisplay.textContent = seconds;
 });
+
+// Home work 4/1 Карточки с специалистами
+
+const charactersList = document.querySelector(".characters-list");
+
+function createCharacterCards(characters) {
+  const specialistsTitle = document.createElement("h2");
+  specialistsTitle.textContent = "SPECIALISTS";
+  specialistsTitle.classList.add("specialists-title");
+
+  const logoImage = document.createElement("img");
+  logoImage.src =
+    "https://media.contentapi.ea.com/content/dam/battlefield/battlefield-2042/common/season-01/bf-2042-white-nav-logo.svg";
+  logoImage.classList.add("logo-image");
+
+  charactersList.appendChild(logoImage);
+  charactersList.appendChild(specialistsTitle);
+
+  const charactersListBlock = document.createElement("div");
+  charactersListBlock.classList.add("characters-list-block");
+
+  characters.forEach((character) => {
+    const card = document.createElement("div");
+    card.classList.add("character-card");
+
+    card.innerHTML = `
+      <img class="character-photo" src="${character.photo}" alt="${character.name}">
+      <h3 class="character-name">${character.name}</h3>
+      <p class="character-call-sign">Позывной: ${character.callSign}</p>
+      <p class="character-class">Класс: ${character.class}</p>
+    `;
+
+    charactersListBlock.appendChild(card);
+  });
+
+  charactersList.appendChild(charactersListBlock);
+}
+
+function fetchJson() {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", "../data/characters.json");
+  xhr.send();
+
+  xhr.onload = function () {
+    const characters = JSON.parse(xhr.response);
+    createCharacterCards(characters);
+  };
+}
+
+fetchJson();
+
+// Home work 4/2 json как объект в консоль
+
+function fetchСonsole() {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", "../data/any.json");
+  xhr.send();
+
+  xhr.onload = function () {
+    const any = JSON.parse(xhr.response);
+    console.log(any);
+  };
+}
+
+fetchСonsole();
