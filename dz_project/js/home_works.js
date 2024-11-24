@@ -80,63 +80,52 @@ resetButton.addEventListener("click", () => {
 
 const charactersList = document.querySelector(".characters-list");
 
-function createCharacterCards(characters) {
-  const specialistsTitle = document.createElement("h2");
-  specialistsTitle.textContent = "SPECIALISTS";
-  specialistsTitle.classList.add("specialists-title");
+const createCharacterCard = ({
+  photo,
+  name,
+  callSign,
+  class: characterClass,
+}) => `
+  <div class="character-card">
+    <img class="character-photo" src="${photo}" alt="${name}">
+    <h3 class="character-name">${name}</h3>
+    <p class="character-call-sign">Позывной: ${callSign}</p>
+    <p class="character-class">Класс: ${characterClass}</p>
+  </div>
+`;
 
-  const logoImage = document.createElement("img");
-  logoImage.src =
-    "https://media.contentapi.ea.com/content/dam/battlefield/battlefield-2042/common/season-01/bf-2042-white-nav-logo.svg";
-  logoImage.classList.add("logo-image");
+const createCharacterCards = (characters) => {
+  charactersList.innerHTML = `
+    <img class="logo-image" src="https://media.contentapi.ea.com/content/dam/battlefield/battlefield-2042/common/season-01/bf-2042-white-nav-logo.svg">
+    <h2 class="specialists-title">SPECIALISTS</h2>
+    <div class="characters-list-block">
+      ${characters.map(createCharacterCard).join("")}
+    </div>
+  `;
+};
 
-  charactersList.appendChild(logoImage);
-  charactersList.appendChild(specialistsTitle);
-
-  const charactersListBlock = document.createElement("div");
-  charactersListBlock.classList.add("characters-list-block");
-
-  characters.forEach((character) => {
-    const card = document.createElement("div");
-    card.classList.add("character-card");
-
-    card.innerHTML = `
-      <img class="character-photo" src="${character.photo}" alt="${character.name}">
-      <h3 class="character-name">${character.name}</h3>
-      <p class="character-call-sign">Позывной: ${character.callSign}</p>
-      <p class="character-class">Класс: ${character.class}</p>
-    `;
-
-    charactersListBlock.appendChild(card);
-  });
-
-  charactersList.appendChild(charactersListBlock);
-}
-
-function fetchJson() {
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", "../data/characters.json");
-  xhr.send();
-
-  xhr.onload = function () {
-    const characters = JSON.parse(xhr.response);
+const fetchJson = async () => {
+  try {
+    const response = await fetch("../data/characters.json");
+    const characters = await response.json();
     createCharacterCards(characters);
-  };
-}
+  } catch (error) {
+    console.error("Ошибка загрузки данных:", error);
+  }
+};
 
 fetchJson();
 
 // Home work 4/2 json как объект в консоль
 
-function fetchСonsole() {
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", "../data/any.json");
-  xhr.send();
-
-  xhr.onload = function () {
-    const any = JSON.parse(xhr.response);
+const fetchConsole = async () => {
+  try {
+    const response = await fetch("../data/any.json");
+    const any = await response.json();
     console.log(any);
-  };
-}
+  } catch (error) {
+    console.error("Ошибка загрузки данных:", error);
+  }
+};
 
-fetchСonsole();
+fetchConsole();

@@ -68,16 +68,29 @@ const usdInput = document.querySelector("#usd");
 const somInput = document.querySelector("#som");
 const eurInput = document.querySelector("#eur");
 
+const fetchRates = async () => {
+  try {
+    const response = await fetch("../data/converter.json");
+    if (!response.ok) {
+      throw new Error("Не удалось загрузить курсы валют");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Ошибка при загрузке курсов валют:", error);
+
+    return null;
+  }
+};
+
 const converter = (element, targetElement1, targetElement2) => {
-  element.oninput = () => {
-    const request = new XMLHttpRequest();
-    request.open("GET", "../data/converter.json");
-    request.setRequestHeader("Content-type", "application/json");
-    request.send();
+  element.oninput = async () => {
+    const data = await fetchRates();
 
-    request.onload = () => {
-      const data = JSON.parse(request.response);
+    if (!data) {
+      return;
+    }
 
+    try {
       if (element.id === "som") {
         targetElement1.value = (element.value / data.usd).toFixed(2);
         targetElement2.value = (element.value / data.eur).toFixed(2);
@@ -101,7 +114,9 @@ const converter = (element, targetElement1, targetElement2) => {
         targetElement1.value = "";
         targetElement2.value = "";
       }
-    };
+    } catch (error) {
+      console.error("Ошибка при выполнении конвертации:", error);
+    }
   };
 };
 
@@ -117,35 +132,116 @@ const cardBlock = document.querySelector(".card");
 const maxCards = 200;
 let cardIndex = 1;
 
-const updateCard = () => {
-  fetch(`https://jsonplaceholder.typicode.com/todos/${cardIndex}`)
-    .then((response) => response.json())
-    .then((data) => {
-      cardBlock.innerHTML = `
-          <p>${data.title}</p>
-          <p>${data.completed}</p>
-          <span>${data.id}</span>
-        `;
-    });
+const fetchData = async (url) => {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Не удалось загрузить данные");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Ошибка при загрузке данных:", error);
+
+    return null;
+  }
 };
 
-const Consolelog = () => {
-  fetch("https://jsonplaceholder.typicode.com/posts")
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    });
+const updateCard = async () => {
+  const data = await fetchData(
+    `https://jsonplaceholder.typicode.com/todos/${cardIndex}`
+  );
+
+  if (!data) return; // Если данных нет, прекращаем выполнение функции
+
+  try {
+    cardBlock.innerHTML = `
+      <p>${data.title}</p>
+      <p>${data.completed}</p>
+      <span>${data.id}</span>
+    `;
+  } catch (error) {
+    console.error("Ошибка при обновлении карточки:", error);
+  }
+};
+
+const Consolelog = async () => {
+  const data = await fetchData("https://jsonplaceholder.typicode.com/posts");
+
+  if (!data) return; // Если данных нет, прекращаем выполнение функции
+
+  try {
+    console.log(data);
+  } catch (error) {
+    console.error("Ошибка при выводе данных в консоль:", error);
+  }
 };
 
 nextButton.onclick = () => {
-  cardIndex = cardIndex < maxCards ? cardIndex + 1 : 1;
-  updateCard();
+  try {
+    cardIndex = cardIndex < maxCards ? cardIndex + 1 : 1;
+    updateCard();
+  } catch (error) {
+    console.error("Ошибка при переходе к следующей карточке:", error);
+  }
 };
 
 prevButton.onclick = () => {
-  cardIndex = cardIndex > 1 ? cardIndex - 1 : maxCards;
-  updateCard();
+  try {
+    cardIndex = cardIndex > 1 ? cardIndex - 1 : maxCards;
+    updateCard();
+  } catch (error) {
+    console.error("Ошибка при переходе к предыдущей карточке:", error);
+  }
 };
 
 updateCard();
 Consolelog();
+
+// Weather
+//http://api.openweathermap.org/data/2.5/weather
+
+const searchButton = document.querySelector("#search");
+const searchInput = document.querySelector(".cityName");
+const city = document.querySelector(".city");
+const temp = document.querySelector(".temp");
+
+const APP_ID = "e417df62e04d3b1b111abeab19cea714";
+const BASE_URL = "http://api.openweathermap.org/data/2.5/weather";
+
+const fetchWeather = async (cityName) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}?appid=${APP_ID}&q=${cityName}&units=metric&lang=ru`
+    );
+    if (!response.ok) {
+      throw new Error("Не удалось получить данные о погоде.");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Ошибка при получении данных погоды:", error);
+
+    return null;
+  }
+};
+
+searchButton.onclick = async () => {
+  try {
+    const data = await fetchWeather(searchInput.value);
+
+    if (!data || data.cod === "404") {
+      city.innerHTML = "Город не найден";
+      temp.innerHTML = "";
+      return;
+    }
+
+    city.innerHTML = data.name || "Город не найден";
+    temp.innerHTML = `${Math.round(data.main.temp)}°C`;
+
+    const description = data.weather[0].description || "Неизвестно";
+    const iconCode = data.weather[0].icon;
+
+    temp.innerHTML += ` ${description} <img src="http://openweathermap.org/img/wn/${iconCode}.png" alt="${description}" />`;
+  } catch (error) {
+    console.error("Ошибка при обновлении погоды:", error);
+  }
+};

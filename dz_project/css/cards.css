@@ -1,0 +1,75 @@
+/*--------CHARACTERS---------*/
+
+.characters-list-block {
+  padding: 150px 0;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 45px 25px;
+}
+
+.character-card {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  height: 370px;
+  border-radius: 9px;
+  text-align: center;
+  background-color: rgb(239, 233, 233);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.character-card:hover {
+  transform: translateY(-7px);
+}
+
+.character-card:hover .character-photo {
+  transform: translateY(-7px);
+}
+
+.character-photo {
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+  transition: transform 0.3s;
+}
+
+.character-name {
+  font-size: 18px;
+  margin: 10px 0;
+  color: #000;
+}
+
+.character-body {
+  font-size: 14px;
+  color: #555;
+  margin: 5px;
+}
+
+.characters {
+  background-image: url("https://media.contentapi.ea.com/content/dam/battlefield/battlefield-2042/common/classes-rework/bf-2042-section-bg-classes-hub-top-xl.jpg.adapt.1920w.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.logo-image {
+  width: 300px;
+  height: auto;
+  padding-top: 50px;
+  display: block;
+  margin: 0 auto;
+}
+
+.character-text {
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  flex-direction: column;
+  text-align: left;
+}
+
+.character-text h4 {
+  text-align: center;
+}
